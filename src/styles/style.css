@@ -6,3 +6,8 @@ li {
     display: flex;
     align-items: center;
 }
+.erasebutton {
+    padding: 5px 5px;
+    background-color: red;
+    
+}
