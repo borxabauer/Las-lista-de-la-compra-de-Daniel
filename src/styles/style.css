@@ -1,0 +1,8 @@
+.completed {
+    text-decoration:line-through;
+}
+
+li {
+    display: flex;
+    align-items: center;
+}
