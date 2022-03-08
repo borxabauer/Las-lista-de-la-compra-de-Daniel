@@ -1,6 +1,6 @@
 # DOM-example
 ** TODO
-* Borrar una tarea.
+* Borrar una tarea. DONE
 * Borrar todas las tareas completadas.
 * Mantener las tareas completadas al final (ordenar automáticamente).
 * Mostrar/ocultar tareas completadas.
