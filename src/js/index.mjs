@@ -1,5 +1,5 @@
 import { getTasks } from "./models/domainObjects.mjs";
-import { updateTasksHTML, taskAddButtonClickHandler } from "./controllers/tasks.mjs";
+import { updateTasksHTML, taskAddButtonClickHandler, searchTask } from "./controllers/tasks.mjs";
 import { taskListHTMLSelector, addTaskButtonSelector } from "./models/defines.mjs"
 
 
@@ -10,6 +10,8 @@ import { taskListHTMLSelector, addTaskButtonSelector } from "./models/defines.mj
  * termine de cargar el documento HTML.
  */
 updateTasksHTML(taskListHTMLSelector,getTasks());
+
+document.querySelector("#search").addEventListener("input", searchTask);
 
 document.querySelector(
     addTaskButtonSelector

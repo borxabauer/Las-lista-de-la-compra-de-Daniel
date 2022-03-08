@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/style.css">
-    <script type="module" src="./js/index.mjs"></script>
-    <title>Tareas</title>
-</head>
-<body>
-    <header>
-        <h1>Lista de tareas</h1>
-    </header>
-    <main>
-        <form action="">
-            <ul id="tasksList">
-                <!-- Elementos dinámicos -->
-            </ul>
-            <input id="taskInput" type="text" name="newTask">
-            <input id="addTaskButton" type="submit" value="+">
-        </form>
-    </main>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./styles/style.css" />
+		<script type="module" src="./js/index.mjs"></script>
+		<title>Tareas</title>
+	</head>
+	<body>
+		<header>
+			<h1>Lista de tareas</h1>
+		</header>
+		<main>
+			<form action="">
+				<input type="text" name="buscador" id="search" />
+				<ul id="tasksList">
+					<!-- Elementos dinámicos -->
+				</ul>
+				<input id="taskInput" type="text" name="newTask" />
+				<input id="addTaskButton" type="submit" value="+" />
+			</form>
+		</main>
+	</body>
 </html>

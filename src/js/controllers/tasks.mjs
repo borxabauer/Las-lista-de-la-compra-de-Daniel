@@ -1,4 +1,4 @@
-import { addTask, saveTasks, getTasks } from "../models/domainObjects.mjs";
+import { addTask, saveTasks, getTasks, tasksStorageKey } from "../models/domainObjects.mjs";
 import { taskListHTMLSelector, addTaskInputSelector, completedCSSClass } from "../models/defines.mjs"
 
 export function task2HTMLElement (taskIndex, taskObject) {
@@ -40,7 +40,6 @@ export function updateTasksHTML (CSSselector, tasksArray) {
     } else {
         listHTMLElement.innerText = "Add your first task..."
     }
-
 }
 
 export function taskAddButtonClickHandler (event) {
@@ -53,4 +52,17 @@ export function taskAddButtonClickHandler (event) {
     };
     addTask(newTask);
     updateTasksHTML(taskListHTMLSelector,getTasks());
+}
+export function searchTask(){
+    const searchInput = document.querySelector("#search");
+    const tasksList = document.querySelector("#tasksList")
+    for(let item of tasksList.children){
+        console.log(item.children[0]);
+        let result = item.children[0].innerText.indexOf(searchInput.value);
+        if (result >= 0){
+            item.classList.remove("hidden")
+        } else {
+            item.classList.add("hidden")
+        }
+    }    
 }
