@@ -6,18 +6,28 @@ export function task2HTMLElement (taskIndex, taskObject) {
     const listHTMLItem = document.createElement("li");
     const pHTMLItem = document.createElement("p");
     const inputCheckboxHTMLItem = document.createElement("input");
+    
+    const inputEraseButtonHTMLItem = document.createElement ("button");
+
+    
     // Les proporciono valores 
     inputCheckboxHTMLItem.type = "checkbox";
     inputCheckboxHTMLItem.checked = taskObject.completed;
     pHTMLItem.innerHTML = taskObject.taskName
-    // Los anido
-    listHTMLItem.append(pHTMLItem, inputCheckboxHTMLItem);
+    //Enzo:Añado el boton para borrar el elemento del array
+    inputEraseButtonHTMLItem.type = "button"
+    inputEraseButtonHTMLItem.className = "erasebutton"
+
+    // Los anido. 
+    //Enzo:Anido tambien el boton para borrar inputEraseButtonHTMLItem
+    listHTMLItem.append(pHTMLItem, inputCheckboxHTMLItem, inputEraseButtonHTMLItem);
     // Aplico estilos si está completada
     if (taskObject.completed) {
         listHTMLItem.classList.add(completedCSSClass);
     } else {
         listHTMLItem.classList.remove(completedCSSClass);
     }
+    
     // Añado el manejador de eventos
     inputCheckboxHTMLItem.addEventListener(
         "click",
@@ -26,6 +36,19 @@ export function task2HTMLElement (taskIndex, taskObject) {
             tasks[taskIndex].completed = event.target.checked;
             saveTasks(tasks);
         }
+    
+    );
+    //Enzo:Añado manejador de eventos para cuando se haga 
+    //click en boton se borre el objeto del array.
+    inputEraseButtonHTMLItem.addEventListener(
+        "click",
+        (event) => {
+            const tasks = getTasks();            
+            tasks.splice(taskIndex,1);           
+            saveTasks(tasks);
+        }
+    
+        
     );
     return listHTMLItem
 }
