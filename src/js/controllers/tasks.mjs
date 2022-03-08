@@ -80,7 +80,6 @@ export function searchTask(){
     const searchInput = document.querySelector("#search");
     const tasksList = document.querySelector("#tasksList")
     for(let item of tasksList.children){
-        console.log(item.children[0]);
         let result = item.children[0].innerText.indexOf(searchInput.value);
         if (result >= 0){
             item.classList.remove("hidden")
