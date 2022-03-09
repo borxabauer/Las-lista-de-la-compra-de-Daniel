@@ -19,11 +19,13 @@ export function task2HTMLElement (taskIndex, taskObject) {
     pHTMLItem.innerHTML = taskObject.taskName
     //Enzo:Añado el boton para borrar el elemento del array
     inputEraseButtonHTMLItem.type = "button"
-    inputEraseButtonHTMLItem.className = "erasebutton"
+    inputEraseButtonHTMLItem.innerHTML = "Borrar"
     inputEditButtonHTMLItem.innerHTML = "Edit"
     inputEditButtonHTMLItem.className = "editButton"
+    inputEditButtonHTMLItem.type="button"
     inputEditBox.type = "text"
     inputConfirmEdit.innerHTML = "confirmar"
+    inputConfirmEdit.type="button"
 
     // Los anido. 
     //Enzo:Anido tambien el boton para borrar inputEraseButtonHTMLItem
@@ -51,10 +53,22 @@ export function task2HTMLElement (taskIndex, taskObject) {
     //click en boton se borre el objeto del array.
     inputEraseButtonHTMLItem.addEventListener(
         "click",
-        (event) => {
-            const tasks = getTasks();            
-            tasks.splice(taskIndex,1);           
-            saveTasks(tasks);
+        () => {
+            updateClock();
+            var totalTime = 10;
+            console.log(totalTime);
+            function updateClock() {
+                inputEraseButtonHTMLItem.innerHTML = totalTime;
+                if(totalTime==0){
+                    const tasks = getTasks();           
+                    tasks.splice(taskIndex,1);           
+                    saveTasks(tasks);
+                }else{
+                    totalTime-=1;
+                    setTimeout("updateClock()",1000);
+                }
+            }
+            
         }   
     );
     //Crea el recuadro del editor, el boton y
@@ -62,24 +76,38 @@ export function task2HTMLElement (taskIndex, taskObject) {
     inputEditButtonHTMLItem.addEventListener(
         "click",
         (event)=>{
+            event.preventDefault();
             const tasks = getTasks();
-            listHTMLItem.append(inputEditBox, inputConfirmEdit)
-            event.preventDefault()
-            let oldTextEdit = tasks[taskIndex].taskName
-            inputEditBox.value = oldTextEdit
+            listHTMLItem.append(inputEditBox, inputConfirmEdit);
+            inputEditBox.value = tasks[taskIndex].taskName;
         }
 
+    );
+    // Intruduce los cambio con enter
+    inputEditBox.addEventListener(
+        "keypress",
+        (event)=>{
+            const tasks = getTasks();
+            if(event.key === 'Enter'){
+                if (window.confirm("Quieres cambiarlo realmente?")) {
+                    tasks[taskIndex].taskName = inputEditBox.value;
+                    saveTasks(tasks);
+                } 
+            }
+        }
     );
     //Coge el contenido nuevo del recuadro del editor y
     //sustituye el antiguo por el nuevo al hacer click en el boton
     inputConfirmEdit.addEventListener(
         "click",
         (event)=>{
-            const tasks = getTasks();
-            tasks[taskIndex].taskName = inputEditBox.value;
-            saveTasks(tasks);
+            if (window.confirm("Quieres cambiarlo realmente?")) {
+                const tasks = getTasks();
+                tasks[taskIndex].taskName = inputEditBox.value;
+                saveTasks(tasks);    
+            }
         }
-    )
+    );
     return listHTMLItem
 }
 
