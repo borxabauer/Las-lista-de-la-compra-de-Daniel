@@ -9,6 +9,8 @@ export function task2HTMLElement (taskIndex, taskObject) {
     
     const inputEraseButtonHTMLItem = document.createElement ("button");
     const inputEditButtonHTMLItem = document.createElement ("button");
+    const inputEditBox = document.createElement("input")
+    const inputConfirmEdit = document.createElement ("button")
 
     
     // Les proporciono valores 
@@ -20,6 +22,8 @@ export function task2HTMLElement (taskIndex, taskObject) {
     inputEraseButtonHTMLItem.className = "erasebutton"
     inputEditButtonHTMLItem.innerHTML = "Edit"
     inputEditButtonHTMLItem.className = "editButton"
+    inputEditBox.type = "text"
+    inputConfirmEdit.innerHTML = "confirmar"
 
     // Los anido. 
     //Enzo:Anido tambien el boton para borrar inputEraseButtonHTMLItem
@@ -56,11 +60,22 @@ export function task2HTMLElement (taskIndex, taskObject) {
     inputEditButtonHTMLItem.addEventListener(
         "click",
         (event)=>{
+            const tasks = getTasks();
+            listHTMLItem.append(inputEditBox, inputConfirmEdit)
             event.preventDefault()
-            console.log(event)
+            let oldTextEdit = tasks[taskIndex].taskName
+            inputEditBox.value = oldTextEdit
         }
 
     );
+    inputConfirmEdit.addEventListener(
+        "click",
+        (event)=>{
+            const tasks = getTasks();
+            tasks[taskIndex].taskName = inputEditBox.value;
+            saveTasks(tasks);
+        }
+    )
     return listHTMLItem
 }
 
