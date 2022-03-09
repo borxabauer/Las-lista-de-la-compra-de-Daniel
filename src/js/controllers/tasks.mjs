@@ -114,3 +114,19 @@ export function searchTask(){
         }
     }    
 }
+
+//Crear Funcion Ocultar
+export function hideFunction (){
+    const lista =document.querySelector("#tasksList");
+    for (let item of lista.children) {
+        if (item.children[1].checked) item.classList.add("hidden")
+    }
+    }
+    
+    //Crear Funcion Mostrar
+ export function showFunction (){
+        const lista =document.querySelector("#tasksList");
+    for (let item of lista.children) {
+        if (item.children[1].checked) item.classList.remove("hidden")
+    }
+    }
