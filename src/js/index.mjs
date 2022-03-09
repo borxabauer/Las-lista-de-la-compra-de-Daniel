@@ -19,7 +19,36 @@ document.querySelector(
     "click",
     taskAddButtonClickHandler
 );
+//Crear boton Ocultar
+document.querySelector(
+    "#hide"
+).addEventListener(
+    "click",
+    hideFunction
+);
+//Crear boton Mostrar
+document.querySelector(
+    "#show"
+).addEventListener(
+    "click",
+    showFunction
+);
 
+//Crear Funcion Ocultar
+function hideFunction (){
+const lista =document.querySelector("#tasklist");
+for (item of lista.children) {
+    if (item.children[1].checked) item.classList.add("hidden")
+}
+}
+
+//Crear Funcion Mostrar
+function showFunction (){
+    const lista =document.querySelector("#tasklist");
+for (item of lista.children) {
+    if (item.children[1].checked) item.classList.remove("hidden")
+}
+}
 
 
 
