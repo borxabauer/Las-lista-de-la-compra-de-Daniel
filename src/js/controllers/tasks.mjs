@@ -57,6 +57,8 @@ export function task2HTMLElement (taskIndex, taskObject) {
             saveTasks(tasks);
         }   
     );
+    //Crea el recuadro del editor, el boton y
+    //añade el texto de la tarea existente en el recuadro del editor
     inputEditButtonHTMLItem.addEventListener(
         "click",
         (event)=>{
@@ -68,6 +70,8 @@ export function task2HTMLElement (taskIndex, taskObject) {
         }
 
     );
+    //Coge el contenido nuevo del recuadro del editor y
+    //sustituye el antiguo por el nuevo al hacer click en el boton
     inputConfirmEdit.addEventListener(
         "click",
         (event)=>{
