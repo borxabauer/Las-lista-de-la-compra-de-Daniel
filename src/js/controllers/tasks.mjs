@@ -8,6 +8,7 @@ export function task2HTMLElement (taskIndex, taskObject) {
     const inputCheckboxHTMLItem = document.createElement("input");
     
     const inputEraseButtonHTMLItem = document.createElement ("button");
+    const inputEditButtonHTMLItem = document.createElement ("button");
 
     
     // Les proporciono valores 
@@ -17,15 +18,19 @@ export function task2HTMLElement (taskIndex, taskObject) {
     //Enzo:Añado el boton para borrar el elemento del array
     inputEraseButtonHTMLItem.type = "button"
     inputEraseButtonHTMLItem.className = "erasebutton"
+    inputEditButtonHTMLItem.innerHTML = "Edit"
+    inputEditButtonHTMLItem.className = "editButton"
 
     // Los anido. 
     //Enzo:Anido tambien el boton para borrar inputEraseButtonHTMLItem
-    listHTMLItem.append(pHTMLItem, inputCheckboxHTMLItem, inputEraseButtonHTMLItem);
+    listHTMLItem.append(pHTMLItem, inputCheckboxHTMLItem, inputEraseButtonHTMLItem,inputEditButtonHTMLItem);
     // Aplico estilos si está completada
     if (taskObject.completed) {
         listHTMLItem.classList.add(completedCSSClass);
+        inputEditButtonHTMLItem.style.display = "none"
     } else {
         listHTMLItem.classList.remove(completedCSSClass);
+        inputEditButtonHTMLItem.style.display = "block"
     }
     
     // Añado el manejador de eventos
@@ -46,9 +51,15 @@ export function task2HTMLElement (taskIndex, taskObject) {
             const tasks = getTasks();            
             tasks.splice(taskIndex,1);           
             saveTasks(tasks);
+        }   
+    );
+    inputEditButtonHTMLItem.addEventListener(
+        "click",
+        (event)=>{
+            event.preventDefault()
+            console.log(event)
         }
-    
-        
+
     );
     return listHTMLItem
 }

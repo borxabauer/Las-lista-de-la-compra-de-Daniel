@@ -1,5 +1,5 @@
 import { getTasks } from "./models/domainObjects.mjs";
-import { updateTasksHTML, taskAddButtonClickHandler, searchTask } from "./controllers/tasks.mjs";
+import { updateTasksHTML, taskAddButtonClickHandler, searchTask} from "./controllers/tasks.mjs";
 import { taskListHTMLSelector, addTaskButtonSelector } from "./models/defines.mjs"
 
 
@@ -12,14 +12,13 @@ import { taskListHTMLSelector, addTaskButtonSelector } from "./models/defines.mj
 updateTasksHTML(taskListHTMLSelector,getTasks());
 
 document.querySelector("#search").addEventListener("input", searchTask);
-
 document.querySelector(
     addTaskButtonSelector
 ).addEventListener(
     "click",
     taskAddButtonClickHandler
 );
-//Crear boton Ocultar
+/*//Crear boton Ocultar
 document.querySelector(
     "#hide"
 ).addEventListener(
