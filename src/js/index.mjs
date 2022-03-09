@@ -1,6 +1,5 @@
 import { getTasks } from "./models/domainObjects.mjs";
 import { updateTasksHTML, taskAddButtonClickHandler, searchTask, showFunction, hideFunction } from "./controllers/tasks.mjs";
-import { updateTasksHTML, taskAddButtonClickHandler, searchTask} from "./controllers/tasks.mjs";
 import { taskListHTMLSelector, addTaskButtonSelector } from "./models/defines.mjs"
 
 
@@ -19,7 +18,7 @@ document.querySelector(
     "click",
     taskAddButtonClickHandler
 );
-/*//Crear boton Ocultar
+//Crear boton Ocultar
 document.querySelector(
     "#hide"
 ).addEventListener(
