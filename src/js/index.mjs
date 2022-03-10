@@ -1,7 +1,6 @@
 import { getTasks } from "./models/domainObjects.mjs";
-import { updateTasksHTML, taskAddButtonClickHandler, searchTask } from "./controllers/tasks.mjs";
+import { updateTasksHTML, taskAddButtonClickHandler, searchTask, quitCompletedTaskHandler } from "./controllers/tasks.mjs";
 import { taskListHTMLSelector, addTaskButtonSelector } from "./models/defines.mjs"
-
 
 /**
  * Punto de entrada al programa.
@@ -12,7 +11,7 @@ import { taskListHTMLSelector, addTaskButtonSelector } from "./models/defines.mj
 updateTasksHTML(taskListHTMLSelector,getTasks());
 
 document.querySelector("#search").addEventListener("input", searchTask);
-
+document.querySelector("#removeCompletedTasks").addEventListener("click",quitCompletedTaskHandler)
 document.querySelector(
     addTaskButtonSelector
 ).addEventListener(
@@ -49,6 +48,7 @@ for (item of lista.children) {
     if (item.children[1].checked) item.classList.remove("hidden")
 }
 }
+
 
 
 

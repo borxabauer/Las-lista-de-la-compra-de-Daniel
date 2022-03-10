@@ -6,9 +6,9 @@ export function task2HTMLElement (taskIndex, taskObject) {
     const listHTMLItem = document.createElement("li");
     const pHTMLItem = document.createElement("p");
     const inputCheckboxHTMLItem = document.createElement("input");
-    
+    //Enzo:Creo boton para borrar tareas
     const inputEraseButtonHTMLItem = document.createElement ("button");
-
+   
     
     // Les proporciono valores 
     inputCheckboxHTMLItem.type = "checkbox";
@@ -17,6 +17,8 @@ export function task2HTMLElement (taskIndex, taskObject) {
     //Enzo:Añado el boton para borrar el elemento del array
     inputEraseButtonHTMLItem.type = "button"
     inputEraseButtonHTMLItem.className = "erasebutton"
+  
+
 
     // Los anido. 
     //Enzo:Anido tambien el boton para borrar inputEraseButtonHTMLItem
@@ -50,6 +52,8 @@ export function task2HTMLElement (taskIndex, taskObject) {
     
         
     );
+
+
     return listHTMLItem
 }
 
@@ -87,4 +91,15 @@ export function searchTask(){
             item.classList.add("hidden")
         }
     }    
+}
+
+export function quitCompletedTaskHandler(event){
+    const tasks = getTasks();
+    event.preventDefault()
+    for (let idx=0; idx < tasks.length; idx++){
+        if (tasks[idx].completed === true){
+            tasks.splice(idx,1)
+        }
+    }  
+saveTasks(tasks)
 }
