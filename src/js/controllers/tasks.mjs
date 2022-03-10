@@ -152,7 +152,7 @@ export function searchTask(){
         }
     }    
 }
-
+//Funcion borrar completadas. Solo borra 2 de las seleccionadas, revisar.
 export function quitCompletedTaskHandler(event){
     const tasks = getTasks();
     event.preventDefault()
