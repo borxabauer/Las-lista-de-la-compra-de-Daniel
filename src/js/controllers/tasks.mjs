@@ -6,8 +6,9 @@ export function task2HTMLElement (taskIndex, taskObject) {
     const listHTMLItem = document.createElement("li");
     const pHTMLItem = document.createElement("p");
     const inputCheckboxHTMLItem = document.createElement("input");
-    
+    //Enzo:Creo boton para borrar tareas
     const inputEraseButtonHTMLItem = document.createElement ("button");
+   
     const inputEditButtonHTMLItem = document.createElement ("button");
     const inputEditBox = document.createElement("input")
     const inputConfirmEdit = document.createElement ("button")
@@ -19,6 +20,9 @@ export function task2HTMLElement (taskIndex, taskObject) {
     pHTMLItem.innerHTML = taskObject.taskName
     //Enzo:Añado el boton para borrar el elemento del array
     inputEraseButtonHTMLItem.type = "button"
+    inputEraseButtonHTMLItem.className = "erasebutton"
+  
+
     inputEraseButtonHTMLItem.innerHTML = "Borrar"
     inputEditButtonHTMLItem.innerHTML = "Edit"
     inputEditButtonHTMLItem.className = "editButton"
@@ -107,6 +111,8 @@ export function task2HTMLElement (taskIndex, taskObject) {
             }
         }
     );
+
+
     return listHTMLItem
 }
 
@@ -145,7 +151,17 @@ export function searchTask(){
         }
     }    
 }
-
+//Funcion borrar completadas. Solo borra 2 de las seleccionadas, revisar.
+export function quitCompletedTaskHandler(event){
+    const tasks = getTasks();
+    event.preventDefault()
+    for (let idx=0; idx < tasks.length; idx++){
+        if (tasks[idx].completed === true){
+            tasks.splice(idx,1)
+        }
+    }  
+saveTasks(tasks)
+}
 //Crear Funcion Ocultar
 export function hideFunction (){
     const lista =document.querySelector("#tasksList");
