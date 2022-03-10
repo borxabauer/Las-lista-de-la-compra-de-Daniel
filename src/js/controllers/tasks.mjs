@@ -19,9 +19,7 @@ export function task2HTMLElement (taskIndex, taskObject) {
     inputCheckboxHTMLItem.checked = taskObject.completed;
     pHTMLItem.innerHTML = taskObject.taskName
     //Enzo:Añado el boton para borrar el elemento del array
-    inputEraseButtonHTMLItem.type = "button"
-    inputEraseButtonHTMLItem.className = "erasebutton"
-  
+    inputEraseButtonHTMLItem.type = "button"  
     inputEraseButtonHTMLItem.innerHTML = "Borrar"
     inputEditButtonHTMLItem.innerHTML = "Edit"
     inputEditButtonHTMLItem.className = "editButton"
