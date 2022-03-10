@@ -22,7 +22,6 @@ export function task2HTMLElement (taskIndex, taskObject) {
     inputEraseButtonHTMLItem.type = "button"
     inputEraseButtonHTMLItem.className = "erasebutton"
   
-
     inputEraseButtonHTMLItem.innerHTML = "Borrar"
     inputEditButtonHTMLItem.innerHTML = "Edit"
     inputEditButtonHTMLItem.className = "editButton"
