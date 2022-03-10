@@ -71,7 +71,6 @@ export function task2HTMLElement (taskIndex, taskObject) {
                     setTimeout("updateClock()",1000);
                 }
             }
-            
         }   
     );
     //Crea el recuadro del editor, el boton y
