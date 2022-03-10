@@ -1,5 +1,5 @@
 import { getTasks } from "./models/domainObjects.mjs";
-import { updateTasksHTML, taskAddButtonClickHandler, searchTask, quitCompletedTaskHandler } from "./controllers/tasks.mjs";
+import { updateTasksHTML, taskAddButtonClickHandler, searchTask, showFunction, hideFunction, quitCompletedTaskHandler} from "./controllers/tasks.mjs";
 import { taskListHTMLSelector, addTaskButtonSelector } from "./models/defines.mjs"
 
 /**
@@ -32,22 +32,6 @@ document.querySelector(
     "click",
     showFunction
 );
-
-//Crear Funcion Ocultar
-function hideFunction (){
-const lista =document.querySelector("#tasklist");
-for (item of lista.children) {
-    if (item.children[1].checked) item.classList.add("hidden")
-}
-}
-
-//Crear Funcion Mostrar
-function showFunction (){
-    const lista =document.querySelector("#tasklist");
-for (item of lista.children) {
-    if (item.children[1].checked) item.classList.remove("hidden")
-}
-}
 
 
 

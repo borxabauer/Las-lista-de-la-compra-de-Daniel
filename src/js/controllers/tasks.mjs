@@ -9,6 +9,10 @@ export function task2HTMLElement (taskIndex, taskObject) {
     //Enzo:Creo boton para borrar tareas
     const inputEraseButtonHTMLItem = document.createElement ("button");
    
+    const inputEditButtonHTMLItem = document.createElement ("button");
+    const inputEditBox = document.createElement("input")
+    const inputConfirmEdit = document.createElement ("button")
+
     
     // Les proporciono valores 
     inputCheckboxHTMLItem.type = "checkbox";
@@ -19,15 +23,24 @@ export function task2HTMLElement (taskIndex, taskObject) {
     inputEraseButtonHTMLItem.className = "erasebutton"
   
 
+    inputEraseButtonHTMLItem.innerHTML = "Borrar"
+    inputEditButtonHTMLItem.innerHTML = "Edit"
+    inputEditButtonHTMLItem.className = "editButton"
+    inputEditButtonHTMLItem.type="button"
+    inputEditBox.type = "text"
+    inputConfirmEdit.innerHTML = "confirmar"
+    inputConfirmEdit.type="button"
 
     // Los anido. 
     //Enzo:Anido tambien el boton para borrar inputEraseButtonHTMLItem
-    listHTMLItem.append(pHTMLItem, inputCheckboxHTMLItem, inputEraseButtonHTMLItem);
+    listHTMLItem.append(pHTMLItem, inputCheckboxHTMLItem, inputEraseButtonHTMLItem,inputEditButtonHTMLItem);
     // Aplico estilos si está completada
     if (taskObject.completed) {
         listHTMLItem.classList.add(completedCSSClass);
+        inputEditButtonHTMLItem.style.display = "none"
     } else {
         listHTMLItem.classList.remove(completedCSSClass);
+        inputEditButtonHTMLItem.style.display = "block"
     }
     
     // Añado el manejador de eventos
@@ -44,13 +57,60 @@ export function task2HTMLElement (taskIndex, taskObject) {
     //click en boton se borre el objeto del array.
     inputEraseButtonHTMLItem.addEventListener(
         "click",
-        (event) => {
-            const tasks = getTasks();            
-            tasks.splice(taskIndex,1);           
-            saveTasks(tasks);
+        () => {
+            updateClock();
+            var totalTime = 10;
+            console.log(totalTime);
+            function updateClock() {
+                inputEraseButtonHTMLItem.innerHTML = totalTime;
+                if(totalTime==0){
+                    const tasks = getTasks();           
+                    tasks.splice(taskIndex,1);           
+                    saveTasks(tasks);
+                }else{
+                    totalTime-=1;
+                    setTimeout("updateClock()",1000);
+                }
+            }
+            
+        }   
+    );
+    //Crea el recuadro del editor, el boton y
+    //añade el texto de la tarea existente en el recuadro del editor
+    inputEditButtonHTMLItem.addEventListener(
+        "click",
+        (event)=>{
+            event.preventDefault();
+            const tasks = getTasks();
+            listHTMLItem.append(inputEditBox, inputConfirmEdit);
+            inputEditBox.value = tasks[taskIndex].taskName;
         }
-    
-        
+
+    );
+    // Intruduce los cambio con enter
+    inputEditBox.addEventListener(
+        "keypress",
+        (event)=>{
+            const tasks = getTasks();
+            if(event.key === 'Enter'){
+                if (window.confirm("Quieres cambiarlo realmente?")) {
+                    tasks[taskIndex].taskName = inputEditBox.value;
+                    saveTasks(tasks);
+                } 
+            }
+        }
+    );
+    //Coge el contenido nuevo del recuadro del editor y
+    //sustituye el antiguo por el nuevo al hacer click en el boton
+    inputConfirmEdit.addEventListener(
+        "click",
+        (event)=>{
+            if (window.confirm("Quieres cambiarlo realmente?")) {
+                const tasks = getTasks();
+                tasks[taskIndex].taskName = inputEditBox.value;
+                saveTasks(tasks);    
+            }
+        }
     );
 
 
@@ -103,3 +163,18 @@ export function quitCompletedTaskHandler(event){
     }  
 saveTasks(tasks)
 }
+//Crear Funcion Ocultar
+export function hideFunction (){
+    const lista =document.querySelector("#tasksList");
+    for (let item of lista.children) {
+        if (item.children[1].checked) item.classList.add("hidden")
+    }
+    }
+    
+    //Crear Funcion Mostrar
+ export function showFunction (){
+        const lista =document.querySelector("#tasksList");
+    for (let item of lista.children) {
+        if (item.children[1].checked) item.classList.remove("hidden")
+    }
+    }
