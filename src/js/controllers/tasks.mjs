@@ -1,19 +1,17 @@
 import { addTask, saveTasks, getTasks, tasksStorageKey } from "../models/domainObjects.mjs";
-import { taskListHTMLSelector, addTaskInputSelector, completedCSSClass } from "../models/defines.mjs"
+import { taskListHTMLSelector, addTaskInputSelector, completedCSSClass, cancelDelete, hideButton} from "../models/defines.mjs"
+
 
 export function task2HTMLElement (taskIndex, taskObject) {
     // Creo los elementos HTML
     const listHTMLItem = document.createElement("li");
     const pHTMLItem = document.createElement("p");
     const inputCheckboxHTMLItem = document.createElement("input");
-    //Enzo:Creo boton para borrar tareas
     const inputEraseButtonHTMLItem = document.createElement ("button");
-   
     const inputEditButtonHTMLItem = document.createElement ("button");
     const inputEditBox = document.createElement("input")
     const inputConfirmEdit = document.createElement ("button")
 
-    
     // Les proporciono valores 
     inputCheckboxHTMLItem.type = "checkbox";
     inputCheckboxHTMLItem.checked = taskObject.completed;
@@ -54,23 +52,36 @@ export function task2HTMLElement (taskIndex, taskObject) {
     //click en boton se borre el objeto del array.
     inputEraseButtonHTMLItem.addEventListener(
         "click",
-        () => {
-            updateClock();
-            var totalTime = 10;
-            console.log(totalTime);
+        ()=> {
+            let totalTime = 10;
+            let timerTime;  
+            document.querySelector(cancelDelete).classList.remove(hideButton);
             function updateClock() {
-                inputEraseButtonHTMLItem.innerHTML = totalTime;
-                if(totalTime==0){
+                inputEraseButtonHTMLItem.innerHTML = "el elemento se borrará en: "+totalTime;
+                if(totalTime===0){
                     const tasks = getTasks();           
                     tasks.splice(taskIndex,1);           
                     saveTasks(tasks);
                 }else{
-                    totalTime-=1;
-                    setTimeout("updateClock()",1000);
+                    console.log(totalTime)
+                    totalTime -= 1;
+                    timerTime = setTimeout(updateClock,1000);
                 }
-            }
-        }   
+            };
+            updateClock();
+            document.querySelector(cancelDelete).addEventListener(
+                "click",
+                ()=>{
+                    clearTimeout(timerTime);
+                    inputEraseButtonHTMLItem.innerHTML = "Borrar"
+                    console.log(timerTime);
+                    document.querySelector(cancelDelete).classList.add(hideButton)
+                    
+                }
+            )
+        }
     );
+    
     //Crea el recuadro del editor, el boton y
     //añade el texto de la tarea existente en el recuadro del editor
     inputEditButtonHTMLItem.addEventListener(
