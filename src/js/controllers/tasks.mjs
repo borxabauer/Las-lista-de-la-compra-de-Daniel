@@ -53,38 +53,9 @@ export function task2HTMLElement (taskIndex, taskObject) {
     inputEraseButtonHTMLItem.addEventListener(
         "click",
         ()=> {
-            let totalTime = 10;
-            let timerTime;  
-            document.querySelector(cancelDelete).classList.remove(hideButton);
-            document.querySelector(timerCount).classList.remove(hideButton);
-            function updateClock() {
-                inputEraseButtonHTMLItem.innerHTML = "Borrando";
-                document.querySelector(timerCount).value = "Se borrarán en: "+totalTime;
-                if(totalTime===0){
-                    const tasks = getTasks();           
-                    tasks.splice(taskIndex,1);           
-                    saveTasks(tasks);
-                    document.querySelector(cancelDelete).classList.add(hideButton);
-                }else{
-                    console.log(totalTime)
-                    totalTime -= 1;
-                    timerTime = setTimeout(updateClock,1000);
-                }
-            };
-            updateClock();
-            //Evento para el boton de cancelar borrado que cancela la funcion de cuenta atras y borrar.
-            document.querySelector(cancelDelete).addEventListener(
-                "click",
-                ()=>{
-                    clearTimeout(timerTime);
-                    inputEraseButtonHTMLItem.innerHTML = "Borrar"
-                    console.log(timerTime);
-                    document.querySelector(cancelDelete).classList.add(hideButton)
-                    document.querySelector(timerCount).classList.add(hideButton);
-                    document.querySelector(timerCount).value = "";
-                    
-                }
-            )
+        const tasks = getTasks();           
+        tasks.splice(taskIndex,1);           
+        saveTasks(tasks);
         }
     );
     
@@ -118,14 +89,54 @@ export function task2HTMLElement (taskIndex, taskObject) {
     inputConfirmEdit.addEventListener(
         "click",
         (event)=>{
-            if (window.confirm("Quieres cambiarlo realmente?")) {
-                const tasks = getTasks();
+            const tasks = getTasks();
+            if (window.confirm("Quieres cambiar "+tasks[taskIndex].taskName+" por "+inputEditBox.value+"?")) {
                 tasks[taskIndex].taskName = inputEditBox.value;
                 saveTasks(tasks);    
             }
         }
     );
-
+    document.querySelector("#removeCompletedTasks").addEventListener(
+        "click",
+        (event)=>{
+            event.preventDefault();
+            let totalTime = 10;
+            let timerTime;  
+            document.querySelector(cancelDelete).classList.remove(hideButton);
+            document.querySelector(timerCount).classList.remove(hideButton);
+            function updateClock() {
+                inputEraseButtonHTMLItem.innerHTML = "Borrando";
+                document.querySelector(timerCount).value = "Se borrarán en: "+totalTime;
+                if(totalTime===0){
+                    const tasks = getTasks();           
+                    if ( taskIndex < tasks.length && tasks[taskIndex].completed === true){
+                        tasks.splice(taskIndex,1);
+                        saveTasks(tasks);
+                    }
+                    document.querySelector(cancelDelete).classList.add(hideButton);
+                    document.querySelector(timerCount).classList.add(hideButton);
+                }else{
+                    console.log(totalTime)
+                    totalTime -= 1;
+                    timerTime = setTimeout(updateClock,1000);
+                }
+            };
+            updateClock();
+            //Evento para el boton de cancelar borrado que cancela la funcion de cuenta atras y borrar.
+            document.querySelector(cancelDelete).addEventListener(
+                "click",
+                ()=>{
+                    clearTimeout(timerTime);
+                    inputEraseButtonHTMLItem.innerHTML = "Borrar"
+                    console.log(timerTime);
+                    document.querySelector(cancelDelete).classList.add(hideButton)
+                    document.querySelector(timerCount).classList.add(hideButton);
+                    document.querySelector(timerCount).value = "";
+                    
+                }
+            )
+        }
+        )
 
     return listHTMLItem
 }
