@@ -49,7 +49,7 @@ export function task2HTMLElement (taskIndex, taskObject) {
     
     );
     //Enzo:Añado manejador de eventos para cuando se haga 
-    //click en boton se borre el objeto del array.
+    //click en boton borrar para inciar un contador de borrado y hacer visible un boton para cancelar la accion.
     inputEraseButtonHTMLItem.addEventListener(
         "click",
         ()=> {
@@ -69,6 +69,7 @@ export function task2HTMLElement (taskIndex, taskObject) {
                 }
             };
             updateClock();
+            //Evento para el boton de cancelar borrado que cancela la funcion de cuenta atras y borrar.
             document.querySelector(cancelDelete).addEventListener(
                 "click",
                 ()=>{
