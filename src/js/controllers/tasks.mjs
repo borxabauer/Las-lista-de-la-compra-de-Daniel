@@ -11,7 +11,6 @@ export function task2HTMLElement (taskIndex, taskObject) {
     const inputEditButtonHTMLItem = document.createElement ("button");
     const inputEditBox = document.createElement("input")
     const inputConfirmEdit = document.createElement ("button")
-
     // Les proporciono valores 
     inputCheckboxHTMLItem.type = "checkbox";
     inputCheckboxHTMLItem.checked = taskObject.completed;
@@ -25,7 +24,6 @@ export function task2HTMLElement (taskIndex, taskObject) {
     inputEditBox.type = "text"
     inputConfirmEdit.innerHTML = "confirmar"
     inputConfirmEdit.type="button"
-
     // Los anido. 
     //Enzo:Anido tambien el boton para borrar inputEraseButtonHTMLItem
     listHTMLItem.append(pHTMLItem, inputCheckboxHTMLItem, inputEraseButtonHTMLItem,inputEditButtonHTMLItem);
@@ -37,7 +35,6 @@ export function task2HTMLElement (taskIndex, taskObject) {
         listHTMLItem.classList.remove(completedCSSClass);
         inputEditButtonHTMLItem.style.display = "block"
     }
-    
     // Añado el manejador de eventos
     inputCheckboxHTMLItem.addEventListener(
         "click",
@@ -46,7 +43,6 @@ export function task2HTMLElement (taskIndex, taskObject) {
             tasks[taskIndex].completed = event.target.checked;
             saveTasks(tasks);
         }
-    
     );
     //Enzo:Añado manejador de eventos para cuando se haga 
     //click en boton borrar para inciar un contador de borrado y hacer visible un boton para cancelar la accion.
@@ -58,7 +54,6 @@ export function task2HTMLElement (taskIndex, taskObject) {
         saveTasks(tasks);
         }
     );
-    
     //Crea el recuadro del editor, el boton y
     //añade el texto de la tarea existente en el recuadro del editor
     inputEditButtonHTMLItem.addEventListener(
@@ -69,7 +64,6 @@ export function task2HTMLElement (taskIndex, taskObject) {
             listHTMLItem.append(inputEditBox, inputConfirmEdit);
             inputEditBox.value = tasks[taskIndex].taskName;
         }
-
     );
     // Intruduce los cambio con enter
     inputEditBox.addEventListener(
@@ -77,7 +71,7 @@ export function task2HTMLElement (taskIndex, taskObject) {
         (event)=>{
             const tasks = getTasks();
             if(event.key === 'Enter'){
-                if (window.confirm("Quieres cambiarlo realmente?")) {
+                if (window.confirm("Quieres cambiar "+tasks[taskIndex].taskName+" por "+inputEditBox.value+"?")) {
                     tasks[taskIndex].taskName = inputEditBox.value;
                     saveTasks(tasks);
                 } 
@@ -96,16 +90,17 @@ export function task2HTMLElement (taskIndex, taskObject) {
             }
         }
     );
+    //Añado manejador de eventos para cuando se haga incie el boton de borrar completadas
+    // para inciar un contador de borrado y hacer visible un boton para cancelar la accion.
     document.querySelector("#removeCompletedTasks").addEventListener(
         "click",
         (event)=>{
             event.preventDefault();
-            let totalTime = 10;
+            let totalTime = 5;
             let timerTime;  
             document.querySelector(cancelDelete).classList.remove(hideButton);
             document.querySelector(timerCount).classList.remove(hideButton);
             function updateClock() {
-                inputEraseButtonHTMLItem.innerHTML = "Borrando";
                 document.querySelector(timerCount).value = "Se borrarán en: "+totalTime;
                 if(totalTime===0){
                     const tasks = getTasks();           
@@ -127,8 +122,6 @@ export function task2HTMLElement (taskIndex, taskObject) {
                 "click",
                 ()=>{
                     clearTimeout(timerTime);
-                    inputEraseButtonHTMLItem.innerHTML = "Borrar"
-                    console.log(timerTime);
                     document.querySelector(cancelDelete).classList.add(hideButton)
                     document.querySelector(timerCount).classList.add(hideButton);
                     document.querySelector(timerCount).value = "";
@@ -136,8 +129,7 @@ export function task2HTMLElement (taskIndex, taskObject) {
                 }
             )
         }
-        )
-
+    )
     return listHTMLItem
 }
 
@@ -161,8 +153,12 @@ export function taskAddButtonClickHandler (event) {
         taskName: input.value,
         completed: false,
     };
+    if(newTask.taskName === ""){
+        alert("No has escrito nada")
+    }else{
     addTask(newTask);
-    updateTasksHTML(taskListHTMLSelector,getTasks());
+    input.value = "";
+    updateTasksHTML(taskListHTMLSelector,getTasks());}
 }
 export function searchTask(){
     const searchInput = document.querySelector("#search");
