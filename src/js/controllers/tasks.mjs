@@ -1,5 +1,5 @@
 import { addTask, saveTasks, getTasks, tasksStorageKey } from "../models/domainObjects.mjs";
-import { taskListHTMLSelector, addTaskInputSelector, completedCSSClass, cancelDelete, hideButton} from "../models/defines.mjs"
+import { taskListHTMLSelector, addTaskInputSelector, completedCSSClass, cancelDelete, hideButton, timerCount} from "../models/defines.mjs"
 
 
 export function task2HTMLElement (taskIndex, taskObject) {
@@ -56,12 +56,15 @@ export function task2HTMLElement (taskIndex, taskObject) {
             let totalTime = 10;
             let timerTime;  
             document.querySelector(cancelDelete).classList.remove(hideButton);
+            document.querySelector(timerCount).classList.remove(hideButton);
             function updateClock() {
-                inputEraseButtonHTMLItem.innerHTML = "el elemento se borrará en: "+totalTime;
+                inputEraseButtonHTMLItem.innerHTML = "Borrando";
+                document.querySelector(timerCount).value = "Se borrarán en: "+totalTime;
                 if(totalTime===0){
                     const tasks = getTasks();           
                     tasks.splice(taskIndex,1);           
                     saveTasks(tasks);
+                    document.querySelector(cancelDelete).classList.add(hideButton);
                 }else{
                     console.log(totalTime)
                     totalTime -= 1;
@@ -77,6 +80,8 @@ export function task2HTMLElement (taskIndex, taskObject) {
                     inputEraseButtonHTMLItem.innerHTML = "Borrar"
                     console.log(timerTime);
                     document.querySelector(cancelDelete).classList.add(hideButton)
+                    document.querySelector(timerCount).classList.add(hideButton);
+                    document.querySelector(timerCount).value = "";
                     
                 }
             )
